@@ -17,13 +17,15 @@ type ConnectedComponentProps<OwnProps, QueryResult, Variables> = OwnProps & {
 type ConnectedComponentType<OwnProps, QueryResult, Variables> = ComponentType<ConnectedComponentProps<OwnProps, QueryResult, Variables>>;
 
 type QueryResultType = {
-  helthy: boolean,
-  message: string,
+  checkHealth: {
+    healthy: boolean,
+    message: string,
+  },
 };
 
 const HealthCheck: ConnectedComponentType<{}, QueryResultType, {}> = (
   props: ConnectedComponentProps<{}, QueryResultType, {}>,
-) => <div>{JSON.stringify(props)}</div>;
+) => <div>{JSON.stringify(props.result && props.result.checkHealth)}</div>;
 
 const enhance = withQuery(
   graphql`

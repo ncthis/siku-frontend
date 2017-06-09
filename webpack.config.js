@@ -10,7 +10,7 @@ module.exports = {
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
 
-    // 'webpack/hot/only-dev-server',
+    'webpack/hot/only-dev-server',
     // // bundle the client for hot reloading
     // // only- means to only hot reload for successful updates
 
@@ -28,6 +28,9 @@ module.exports = {
 
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.js'],
+    alias: {
+      config: path.join(__dirname, 'config', `${process.env.NODE_ENV}.js`),
+    },
   },
 
   plugins: [

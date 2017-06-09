@@ -2,13 +2,16 @@
 
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 
+// $FlowFixMe
+import config from 'config'; // eslint-disable-line
+
 const source = new RecordSource();
 const store = new Store(source);
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
 function fetchQuery<T, V>(operation: { text: string, }, variables: V): Promise<T> {
-  return fetch('https://us-west-2.api.scaphold.io/graphql/thisday', {
+  return fetch(config.GRAPHQL_ENDPOINT, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

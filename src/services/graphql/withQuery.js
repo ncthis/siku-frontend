@@ -30,23 +30,13 @@ function withQuery<Variables: {}, OwnProps: {}, Result: {}>(
       variables={variables}
       render={({
         error,
-        result,
-        otherProps,
+        props,
       }: {
         error: Error,
-        result: Result,
-      }) => {
-        console.log({ result, otherProps });
-        return (
-          <BaseComponent
-            {...ownProps}
-            error={error}
-            result={result}
-            loading={!error && !result}
-            variables={variables}
-          />
-        );
-      }}
+        props: Result,
+      }) => (
+        <BaseComponent {...ownProps} error={error} result={props} loading={!error && !props} variables={variables} />
+        )}
     />
   );
 }
