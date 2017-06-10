@@ -13,7 +13,7 @@ const Header = ({
 }): React.Element<*> => (
   <div>
     <Menu borderless>
-      <Menu.Item header>thisday.io</Menu.Item>
+      <Menu.Item header>siku.io</Menu.Item>
       <Menu.Item
         name="home"
         active={activeItem === 'home'}
