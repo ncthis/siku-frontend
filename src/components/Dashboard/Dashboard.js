@@ -3,6 +3,7 @@
 import React from 'react';
 import { Header, Segment, Divider } from 'semantic-ui-react';
 import HealthCheck from './../common/HealthCheck/HealthCheck';
+import withAuthentication from './../../services/auth/withAuthentication';
 
 const Dashboard = (): React.Element<*> => (
   <Segment>
@@ -12,4 +13,8 @@ const Dashboard = (): React.Element<*> => (
   </Segment>
 );
 
-export default Dashboard;
+const enhance = withAuthentication();
+
+const enhancedDashboard = enhance(Dashboard);
+
+export default enhancedDashboard;
