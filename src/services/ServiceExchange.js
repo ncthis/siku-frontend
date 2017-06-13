@@ -1,0 +1,29 @@
+// @flow
+// centralized exchange for communication between services
+
+import _ from 'lodash';
+import Logger from './logging/Logger';
+
+const logger = new Logger('ServiceExchange');
+
+class ServiceExchange {
+  static listeners: { [eventType: string]: Array<(payload: any) => void>, } = {};
+
+  static subscribe(eventType: string, handler: (payload: any) => void): void {
+    ServiceExchange.listeners[eventType] = (ServiceExchange.listeners[eventType] || []).concat(handler);
+  }
+
+  static emit(eventType: string, payload: any): void {
+    const listeners = ServiceExchange.listeners[eventType];
+
+    if (_.isEmpty(listeners)) {
+      logger.info(`No listeners for ${eventType}`);
+    } else {
+      listeners.forEach((listener: (payload: any) => void) => listener(payload));
+    }
+  }
+
+  // TODO: unsub
+}
+
+export default ServiceExchange;

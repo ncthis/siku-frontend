@@ -2,6 +2,7 @@
 
 import React from 'react';
 import withQuery, { graphql } from '../graphql/withQuery';
+import LoginView from './LoginView';
 
 type FunctionComponentType<A> = (props: A) => ?React$Element<A>;
 type ClassComponentType<D, A, S> = Class<React$Component<D, A, S>>;
@@ -28,15 +29,14 @@ const userQuery = graphql`
   }
 `;
 
-const LoginView = () => <div>{'nanananas'}</div>;
-
 function withAuthentication<OwnProps: Object>(): HocType<OwnProps, OwnProps> {
   return (BaseComponent: ComponentType<OwnProps & { user: ViewerType, }>): ComponentType<OwnProps> => (
     ownProps: OwnProps,
   ) =>
     React.createElement(
       withQuery(userQuery, {})(
-        ({ result }: { result: ResultType, }) => (result.viewer.user ? <BaseComponent {...ownProps} user={result.viewer.user} /> : <LoginView />),
+        ({ result }: { result: ResultType, }) =>
+          (result.viewer.user ? <BaseComponent {...ownProps} user={result.viewer.user} /> : <LoginView />),
       ),
     );
 }

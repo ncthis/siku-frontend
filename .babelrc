@@ -8,7 +8,8 @@
         ],
         "flow",
         "react",
-        "env"
+        "env",
+        "stage-0"
     ],
     "plugins": [
         "react-hot-loader/babel",
