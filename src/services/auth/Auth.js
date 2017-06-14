@@ -1,13 +1,13 @@
 // @flow
 
-// // $FlowFixMe
-import config from 'config'; // eslint-disable-line
 import Auth0Lock from 'auth0-lock';
 
+import config from '../../config';
 import history from '../routing/history';
 import Logger from './../logging/Logger';
 import mutate, { graphql } from './../graphql/mutate';
-import type { LoginUserWithAuth0LockInput_identity as MutationType } from './__generated__/AuthMutation.graphql'; // eslint-disable-line camelcase
+import type { LoginUserWithAuth0LockInput_identity as MutationType } from './__generated__/AuthMutation.graphql'; // eslint-disable-line
+import ServiceExchange from './../ServiceExchange';
 
 type ProfileType = {
   clientID: string,
@@ -33,7 +33,7 @@ type StoredAuthType = {
   accessToken?: string,
 };
 
-const loginMutation = graphql`
+const loginMutation: string = graphql`
   mutation AuthMutation(
     $input: LoginUserWithAuth0LockInput!
   ) {
@@ -61,32 +61,31 @@ class Auth {
     },
   });
 
-  static init = () => {
+  static init() {
     const auth = Auth.getAuth();
 
     if (auth) {
-      return Auth.onAuthenticated(auth);
+      logger.info('Locally authenticated');
+      Auth.onAuthenticated(auth);
+    } else {
+      Auth.lock.on('authenticated', ({
+        accessToken,
+        idToken,
+        state,
+        idTokenPayload,
+      }: { accessToken: string, idToken: string, state: string, idTokenPayload: { exp: number, }, }) => {
+        logger.info('Authenticated', { accessToken });
+        Auth.onAuthenticated({ accessToken, idToken, expiresAt: idTokenPayload.exp });
+        Auth.toStorage(idToken, accessToken, idTokenPayload.exp);
+        history.push(state);
+      });
     }
+  }
 
-    Auth.lock.on('authenticated', ({
-      accessToken,
-      idToken,
-      state,
-      idTokenPayload,
-    }: { accessToken: string, idToken: string, state: string, idTokenPayload: { exp: number, }, }) => {
-      logger.info('Authenticated', { accessToken });
-      Auth.onAuthenticated({ accessToken, idToken, expiresAt: idTokenPayload.exp });
-      Auth.toStorage(idToken, accessToken, idTokenPayload.exp);
-      history.push(state);
-    });
-  };
+  static onAuthenticated = (auth: StoredAuthType, _ServiceExchange = ServiceExchange, _Auth = Auth): void => {
+    _ServiceExchange.emit('authenticated', { idToken: auth.idToken });
 
-  static onAuthenticated(
-    auth: StoredAuthType,
-    getUserInfo: typeof Auth.lock.getUserInfo = Auth.lock.getUserInfo,
-    loginToGraphql: typeof Auth.loginToGraphql = Auth.loginToGraphql,
-  ) {
-    getUserInfo(auth.accessToken, (error: Error, profile: ProfileType) => {
+    _Auth.lock.getUserInfo(auth.accessToken, (error: Error, profile: ProfileType) => {
       if (error) {
         logger.error(error);
       }
@@ -102,9 +101,9 @@ class Auth {
         },
       };
 
-      loginToGraphql(input);
+      _Auth.loginToGraphql(input);
     });
-  }
+  };
 
   static loginToGraphql: (input: MutationType) => Promise<any> = (input: MutationType) =>
     mutate(loginMutation, { input }).then(logger.info).catch(logger.error);
@@ -125,11 +124,15 @@ class Auth {
     auth: StoredAuthType = Auth.fromStorage(),
     now: number = Date.now(),
   ): StoredAuthType | typeof undefined {
-    if (auth.idToken && Number(auth.expiresAt) > now) {
+    if (auth.idToken && Number(auth.expiresAt) > now / 1000) {
       return auth;
     }
 
     return undefined;
+  }
+
+  static isAuthenticated(_Auth = Auth): boolean {
+    return !!_Auth.getAuth();
   }
 
   static login(lockScreen: typeof Auth.lock = Auth.lock): void {

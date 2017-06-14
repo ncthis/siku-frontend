@@ -2,8 +2,7 @@
 
 import React from 'react';
 import Auth from './Auth';
-// // $FlowFixMe
-import config from 'config'; // eslint-disable-line
+import config from '../../config';
 
 class LoginView extends React.Component {
   componentDidMount() {

@@ -36,7 +36,9 @@ function withAuthentication<OwnProps: Object>(): HocType<OwnProps, OwnProps> {
     React.createElement(
       withQuery(userQuery, {})(
         ({ result }: { result: ResultType, }) =>
-          (result.viewer.user ? <BaseComponent {...ownProps} user={result.viewer.user} /> : <LoginView />),
+          (result && result.viewer && result.viewer.user
+            ? <BaseComponent {...ownProps} user={result.viewer.user} />
+            : <LoginView />),
       ),
     );
 }

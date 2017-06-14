@@ -1,7 +1,6 @@
 // @flow
 
-// $FlowFixMe
-import config from 'config'; // eslint-disable-line
+import config from '../../config';
 import debug from 'debug';
 
 class Logger {
@@ -11,6 +10,7 @@ class Logger {
   constructor(serviceName: string) {
     this.serviceName = `siku:local:${serviceName}`;
     this.debug = debug(this.serviceName);
+    this.info('Instantiated logger');
   }
 
   info = (...args: Array<any>) => {

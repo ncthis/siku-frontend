@@ -7,7 +7,7 @@
   "rules": {
     "max-len": [
       2,
-      80
+      120
     ],
     "react/jsx-filename-extension": [
       0
@@ -32,7 +32,12 @@
       2,
       "comma"
     ],
-    "flowtype/require-parameter-type": 2,
+    "flowtype/require-parameter-type": [
+      2,
+      {
+        "excludeParameterMatch": "^_"
+      }
+    ],
     "flowtype/require-return-type": 0,
     "flowtype/require-valid-file-annotation": 2,
     "flowtype/semi": [

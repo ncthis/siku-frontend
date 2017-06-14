@@ -6,6 +6,8 @@ import Logger from './logging/Logger';
 
 const logger = new Logger('ServiceExchange');
 
+type EventType = 'authenticated' | 'logout';
+
 class ServiceExchange {
   static listeners: { [eventType: string]: Array<(payload: any) => void>, } = {};
 
@@ -13,7 +15,7 @@ class ServiceExchange {
     ServiceExchange.listeners[eventType] = (ServiceExchange.listeners[eventType] || []).concat(handler);
   }
 
-  static emit(eventType: string, payload: any): void {
+  static emit(eventType: EventType, payload: any): void {
     const listeners = ServiceExchange.listeners[eventType];
 
     if (_.isEmpty(listeners)) {
