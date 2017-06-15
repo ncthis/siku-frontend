@@ -8,8 +8,7 @@ dependencies:
   pre:
     - npm install -g flow-typed
   override:
-    - yarn:
-      timeout: 1200
+    - yarn --verbose
   cache_directories:
     - ~/.cache/yarn
 
