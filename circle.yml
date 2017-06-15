@@ -8,9 +8,7 @@ dependencies:
   pre:
     - npm install -g flow-typed
   override:
-    - yarn --verbose
-  cache_directories:
-    - ~/.cache/yarn
+    - yarn
 
 test:
   override:
