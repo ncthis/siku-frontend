@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Plugins from './components/Plugins/Plugins';
 import styles from './App.css';
 import history from './services/routing/history';
-import services from './services';
+import ServiceManager from './services/ServiceManager';
 
 const App = (): React.Element<*> => (
   <Router history={history}>
@@ -24,6 +24,6 @@ const App = (): React.Element<*> => (
   </Router>
 );
 
-services.init();
+ServiceManager.init();
 
 export default App;

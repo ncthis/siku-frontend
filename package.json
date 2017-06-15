@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "test": "yarn flow && yarn lint && yarn unit-tests",
-    "unit-tests": "mocha ./src/**/*.test.js node_modules/.bin/saul",
+    "unit-tests": "NODE_ENV=test mocha ./src/**/*.test.js node_modules/.bin/saul",
     "lint": "eslint ./src/**/*.js",
     "start": "webpack-dev-server",
     "postinstall": "flow-typed install",

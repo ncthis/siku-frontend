@@ -8,6 +8,7 @@ import Logger from './../logging/Logger';
 import mutate, { graphql } from './../graphql/mutate';
 import type { LoginUserWithAuth0LockInput_identity as MutationType } from './__generated__/AuthMutation.graphql'; // eslint-disable-line
 import ServiceExchange from './../ServiceExchange';
+import ServiceManager from './../ServiceManager';
 
 type ProfileType = {
   clientID: string,
@@ -140,7 +141,6 @@ class Auth {
   }
 }
 
-// TODO: init somewhere else
-Auth.init();
+ServiceManager.bootstrap(Auth);
 
 export default Auth;

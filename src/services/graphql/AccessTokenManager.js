@@ -1,11 +1,9 @@
 // @flow
 
 import ServiceExchange from './../ServiceExchange';
-import services from './../';
-import type { IService } from './../';
+import ServiceManager from './../ServiceManager';
+import type { IService } from './../ServiceManager';
 
-// @t "inits" init({}) equals 'temptoken'
-// @t "gets token" getToken({accessToken: 'temptoken'}) equals 'temptoken'
 class AccessTokenManager implements IService {
   static accessToken: string = '';
 
@@ -24,6 +22,6 @@ class AccessTokenManager implements IService {
   }
 }
 
-services.bootstrapService(AccessTokenManager);
+ServiceManager.bootstrap(AccessTokenManager);
 
 export default AccessTokenManager;
