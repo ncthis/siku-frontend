@@ -5,8 +5,11 @@ machine:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 dependencies:
+  pre:
+    - npm install -g flow-typed
   override:
-    - yarn
+    - yarn:
+      timeout: 1200
   cache_directories:
     - ~/.cache/yarn
 
