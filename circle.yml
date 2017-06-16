@@ -4,7 +4,6 @@ jobs:
     working_directory: ~/siku-frontend
     docker:
       - image: circleci/node:6.10-browsers
-      - image: mongo:3.4.4
     steps:
       - checkout
       - restore_cache:

@@ -38,7 +38,6 @@
     "nyc": "^11.0.2",
     "relay-compiler": "^1.0.0",
     "saul": "^0.0.17",
-    "semantic-ui": "^2.2.10",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",
