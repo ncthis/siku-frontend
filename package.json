@@ -9,7 +9,7 @@
     "unit-tests": "NODE_ENV=test mocha ./src/**/*.test.js node_modules/.bin/saul",
     "lint": "eslint ./src/**/*.js",
     "start": "webpack-dev-server",
-    "postinstall": "flow-typed install",
+    "postinstall": "node_modules/.bin/flow-typed install",
     "relay": "relay-compiler --src ./src --schema src/services/graphql/schema.graphql"
   },
   "devDependencies": {
@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^7.0.1",
     "file-loader": "^0.11.2",
     "flow-bin": "^0.47.0",
+    "flow-typed": "^2.1.2",
     "mocha": "^3.4.2",
     "nyc": "^11.0.2",
     "relay-compiler": "^1.0.0",
