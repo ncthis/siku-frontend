@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 6.9.5
+
+dependencies:
+  pre:
+    - npm install -g flow-typed
+  override:
+    - yarn
+
+test:
+  override:
+    - yarn test

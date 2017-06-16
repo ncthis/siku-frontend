@@ -1,17 +1,19 @@
 {
-    "presets": [
-        [
-            "es2015",
-            {
-                "modules": false
-            }
-        ],
-        "flow",
-        "react",
-        "env"
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
     ],
-    "plugins": [
-        "react-hot-loader/babel",
-        "relay"
-    ]
+    "flow",
+    "react",
+    "env",
+    "stage-0"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "relay",
+    "autobind-class-methods"
+  ]
 }

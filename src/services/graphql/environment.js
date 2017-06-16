@@ -1,21 +1,29 @@
 // @flow
 
+import _ from 'lodash';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
+import config from './../../config';
+import AccessTokenManager from './AccessTokenManager';
 
-// $FlowFixMe
-import config from 'config'; // eslint-disable-line
+const source: RecordSource = new RecordSource();
+const store: Store = new Store(source);
 
-const source = new RecordSource();
-const store = new Store(source);
+const getHeaders = (accessToken: string): Headers =>
+  _({
+    'content-type': 'application/json',
+    Authorization: accessToken,
+  })
+    .omitBy(_.isEmpty)
+    .value();
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
 function fetchQuery<T, V>(operation: { text: string, }, variables: V): Promise<T> {
+  const headers: Headers = getHeaders(AccessTokenManager.getToken());
+
   return fetch(config.GRAPHQL_ENDPOINT, {
     method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input
       variables,
