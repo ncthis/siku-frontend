@@ -35,6 +35,7 @@
     "file-loader": "^0.11.2",
     "flow-bin": "^0.47.0",
     "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
     "relay-compiler": "^1.0.0",
     "saul": "^0.0.17",
     "semantic-ui": "^2.2.10",

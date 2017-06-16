@@ -1,13 +1,32 @@
-machine:
-  node:
-    version: 6.9.5
-
-dependencies:
-  pre:
-    - npm install -g flow-typed
-  override:
-    - yarn
-
-test:
-  override:
-    - yarn test
+version: 2
+jobs:
+  build:
+    working_directory: ~/siku-frontend
+    docker:
+      - image: circleci/node:6.10-browsers
+      - image: mongo:3.4.4
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-via-yarn
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - .node_modules
+      - run:
+          name: test
+          command: yarn test
+      - run:
+          name: code-coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
+      - store_test_results:
+          path: test-results.xml
