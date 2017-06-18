@@ -17,13 +17,14 @@ class ServiceExchange {
   //    default.subscribe('type2', () => {}, { listeners: { type2: [function foo() {}] } }) ~equals 2
   static subscribe(eventType: string, handler: (payload: any) => void, _ServiceExchange = ServiceExchange): number {
     logger.info(`Subscribed to ${eventType}`);
+    // eslint-disable-next-line no-param-reassign
     _ServiceExchange.listeners[eventType] = (_ServiceExchange.listeners[eventType] || []).concat(handler);
 
     return _ServiceExchange.listeners[eventType].length;
   }
 
   // @t "should emit to all listeners"
-  //    default.emit('type1', 'pl', {listeners: {type1: [ spy('one'), spy('two') ]}}) ~expects spy('one').args[0][0] === 'pl' && spy('two').args[0][0] === 'pl'
+  //    default.emit('type1', 'pl', {listeners: {type1: [ spy('one'), spy('two') ]}}) ~expects spy('one').calledWith('pl') && spy('two').calledWith('pl')
   // @t "should not emit to non-listeners"
   //    default.emit('type1', 'p1', {listeners: {type2: [ spy('three') ]}}) ~expects !spy('three').args[0]
   static emit(eventType: EventType, payload: any, _ServiceExchange = ServiceExchange): void {
