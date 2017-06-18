@@ -1,3 +1,4 @@
 import createHistory from 'history/createBrowserHistory';
+import isTest from '../../utils/isTest';
 
-export default createHistory();
+export default (isTest ? {} : createHistory());
