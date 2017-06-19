@@ -14,7 +14,7 @@ module.exports = {
     // // bundle the client for hot reloading
     // // only- means to only hot reload for successful updates
 
-    './src/index.js',
+    './src/index.tsx',
     // the entry point of our app
   ],
 
@@ -55,10 +55,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        loader: ['babel-loader'],
-        exclude: /node_modules/,
+        test: /\.tsx?$/,
+        loader: ['awesome-typescript-loader'],
       },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       // https://github.com/gajus/react-css-modules#css-modules
       {
         test: /\.css$/,

@@ -1,13 +1,8 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import withQuery, { graphql } from '../graphql/withQuery';
 import LoginView from './LoginView';
-
-type FunctionComponentType<A> = (props: A) => ?React$Element<A>;
-type ClassComponentType<D, A, S> = Class<React$Component<D, A, S>>;
-export type ComponentType<A> = FunctionComponentType<A> | ClassComponentType<Object, A, Object>;
-type HocType<A, B> = (Base: ComponentType<A>) => ComponentType<B>;
 
 type ViewerType = {
   id: string,

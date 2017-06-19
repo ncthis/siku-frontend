@@ -1,13 +1,13 @@
 /* @flow */
 
-import React from 'react';
+import * as React from 'react';
 import { Header, Segment, Divider } from 'semantic-ui-react';
 import HealthCheck from './../common/HealthCheck/HealthCheck';
 import withAuthentication from './../../services/auth/withAuthentication';
 
-const Plugins = (): React.Element<*> => (
+const Dashboard = (): React.Element<*> => (
   <Segment>
-    <Header size="large">My Plugins</Header>
+    <Header size="large">Dashboard</Header>
     <Divider />
     <HealthCheck />
   </Segment>
@@ -15,6 +15,6 @@ const Plugins = (): React.Element<*> => (
 
 const enhance = withAuthentication();
 
-const enhancedPlugins = enhance(Plugins);
+const enhancedDashboard = enhance(Dashboard);
 
-export default enhancedPlugins;
+export default enhancedDashboard;

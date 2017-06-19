@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import Auth from './Auth';
 import config from '../../config';
 

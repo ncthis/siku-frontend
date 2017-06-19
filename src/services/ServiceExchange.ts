@@ -1,6 +1,3 @@
-// @flow
-// centralized exchange for communication between services
-
 import _ from 'lodash';
 import Logger from './logging/Logger';
 

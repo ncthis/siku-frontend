@@ -1,10 +1,7 @@
-// @flow
-
 import ServiceExchange from './../ServiceExchange';
 import ServiceManager from './../ServiceManager';
-import type { IService } from './../ServiceManager';
 
-class AccessTokenManager implements IService {
+class AccessTokenManager {
   static accessToken: string = '';
 
   static init(_ServiceExchange = ServiceExchange, _AccessTokenManager = AccessTokenManager): void {

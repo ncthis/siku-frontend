@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 
 class Callback extends React.Component {
-  componentWillMount() {}
+  componentWillMount() { }
 
   render() {
     return <span />;

@@ -1,11 +1,11 @@
 // @flow
 
 import config from '../../config';
-import debug from 'debug';
+import * as debug from 'debug';
 
 class Logger {
   serviceName: string;
-  debug: typeof debug.IDebugger;
+  debug: debug.IDebugger;
 
   constructor(serviceName: string) {
     this.serviceName = `siku:local:${serviceName}`;
