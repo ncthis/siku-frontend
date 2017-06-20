@@ -3,33 +3,26 @@
 import * as React from 'react';
 import { graphql as _graphql, QueryRenderer } from 'react-relay';
 import _environment from './environment';
-import _ from 'lodash';
+import * as _ from 'lodash';
+import { HOCType } from 'siku-types';
 
 export const environment = _environment;
 export const graphql = _graphql;
 
-type ResultPropsType<Result, Variables> = {
+export interface ResultPropsType<Result extends {}, Variables extends {}> {
   error: Error,
   result: Result,
   loading: boolean,
   variables: Variables,
 };
 
-// : React.Component<ResultPropsType<Result, Variables, OwnProps>, {}>
-
-// : React.Component<OwnProps, {}>
-
-// type Component<P, S> = React.StatelessComponent<P> | React.Component<P, S>
-
-type HOCType<BaseProps, OwnProps> = (BaseComponent: new () => React.Component<BaseProps & OwnProps, {}>) => React.StatelessComponent<OwnProps>;
-
 const Loading = () => <div>{'Loading'}</div>
 
-function withQuery<Result, Variables, OwnProps>(
+function withQuery<Result extends {}, Variables extends {}, OwnProps extends {}>(
   query: typeof graphql,
   variables: Variables,
-): HOCType<ResultPropsType<Result, Variables> & OwnProps, OwnProps> {
-  return (BaseComponent) => (
+): HOCType<ResultPropsType<Result, Variables>, OwnProps> {
+  return (BaseComponent: React.StatelessComponent<ResultPropsType<Result, Variables>>) => (
     ownProps: OwnProps,
   ) => (
       <QueryRenderer
@@ -40,15 +33,8 @@ function withQuery<Result, Variables, OwnProps>(
           error: Error,
           props: Result,
         }) => {
-          const baseProps: ResultPropsType<Result, Variables> & OwnProps = _.assign({}, ownProps, {
-            result: props,
-            error,
-            loading: !error && !props,
-            variables,
-          });
-
           return (error || props
-            ? <BaseComponent {...baseProps as any} />
+            ? <BaseComponent {...ownProps} result={props} error={error} loading={!error && !props} variables={variables} />
             : <Loading />
           )
         }}

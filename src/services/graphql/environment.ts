@@ -1,14 +1,14 @@
 // @flow
 
-import _ from 'lodash';
-import { Environment, Network, RecordSource, Store } from 'relay-runtime';
+import * as _ from 'lodash';
+const { Environment, Network, RecordSource, Store }: any = 'relay-runtime';
 import config from './../../config';
 import AccessTokenManager from './AccessTokenManager';
 
-const source: RecordSource = new RecordSource();
-const store: Store = new Store(source);
+const source: any = new RecordSource();
+const store: any = new Store(source);
 
-const getHeaders = (accessToken: string): Headers =>
+const getHeaders = (accessToken: string): Object =>
   _({
     'content-type': 'application/json',
     Authorization: accessToken,
@@ -19,7 +19,7 @@ const getHeaders = (accessToken: string): Headers =>
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
 function fetchQuery<T, V>(operation: { text: string, }, variables: V): Promise<T> {
-  const headers: Headers = getHeaders(AccessTokenManager.getToken());
+  const headers = getHeaders(AccessTokenManager.getToken());
 
   return fetch(config.GRAPHQL_ENDPOINT, {
     method: 'POST',

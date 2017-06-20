@@ -4,7 +4,7 @@ import * as React from 'react';
 import Auth from './Auth';
 import config from '../../config';
 
-class LoginView extends React.Component {
+class LoginView extends React.Component<{}, {}> {
   componentDidMount() {
     Auth.login();
   }

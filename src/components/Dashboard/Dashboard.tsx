@@ -5,7 +5,7 @@ import { Header, Segment, Divider } from 'semantic-ui-react';
 import HealthCheck from './../common/HealthCheck/HealthCheck';
 import withAuthentication from './../../services/auth/withAuthentication';
 
-const Dashboard = (): React.Element<*> => (
+const Dashboard = (): JSX.Element => (
   <Segment>
     <Header size="large">Dashboard</Header>
     <Divider />
