@@ -19,5 +19,5 @@ declare module 'react-relay' {
     onError: (err: Error) => void;
   }
 
-  const commitMutation = (environment: EnvironmentType, params: MutationParams) => void;
+  function commitMutation(environment: EnvironmentType, params: MutationParams): void;
 }

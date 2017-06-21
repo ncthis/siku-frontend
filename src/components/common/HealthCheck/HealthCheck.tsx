@@ -4,17 +4,8 @@ import * as React from 'react';
 import { graphql } from 'react-relay';
 
 import withQuery from './../../../services/graphql/withQuery';
-
-import type { ComponentType } from './../../../services/graphql/withQuery';
-
-type ConnectedComponentProps<OwnProps, QueryResult, Variables> = OwnProps & {
-  error: Error,
-  result: QueryResult,
-  loading: boolean,
-  variables: Variables,
-};
-
-type ConnectedComponentType<OwnProps, QueryResult, Variables> = ComponentType<ConnectedComponentProps<OwnProps, QueryResult, Variables>>;
+import { HOCType } from 'siku-types';
+import { ResultPropsType } from '../../../services/graphql/withQuery';
 
 type QueryResultType = {
   checkHealth: {
@@ -23,11 +14,15 @@ type QueryResultType = {
   },
 };
 
-const HealthCheck: ConnectedComponentType<{}, QueryResultType, {}> = (
-  props: ConnectedComponentProps<{}, QueryResultType, {}>,
+interface HealthCheckProps extends ResultPropsType<QueryResultType, {}> {
+  result: QueryResultType;
+}
+
+const HealthCheckComponent: React.StatelessComponent<HealthCheckProps> = (
+  props: HealthCheckProps,
 ) => <div>{JSON.stringify(props.result && props.result.checkHealth)}</div>;
 
-const enhance = withQuery(
+const enhance: HOCType<HealthCheckProps, {}> = withQuery(
   graphql`
     query HealthCheckQuery {
       checkHealth {
@@ -39,6 +34,6 @@ const enhance = withQuery(
   {},
 );
 
-const enhanced: ComponentType<{}> = enhance(HealthCheck);
+const HealthCheck = enhance(HealthCheckComponent);
 
-export default enhanced;
+export default HealthCheck;

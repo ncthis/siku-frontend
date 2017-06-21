@@ -1,15 +1,13 @@
 import { AppContainer } from 'react-hot-loader';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App';
-
-const rootEl = document.getElementById('root');
+import Application from './Application';
 
 ReactDOM.render(
   <AppContainer>
-    <App />
+    <Application />
   </AppContainer>,
-  rootEl,
+  document.getElementById('root'),
 );
 
 declare var module: any;

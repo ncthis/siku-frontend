@@ -6,26 +6,21 @@ import config from '../../config';
 import history from '../routing/history';
 import Logger from './../logging/Logger';
 import mutate, { graphql } from './../graphql/mutate';
-import type { LoginUserWithAuth0LockInput_identity as MutationType } from './__generated__/AuthMutation.graphql'; // eslint-disable-line
 import ServiceExchange from './../ServiceExchange';
 import ServiceManager from './../ServiceManager';
+import * as _ from 'lodash';
 
-type ProfileType = {
-  clientID: string,
-  created_at: string,
-  email: string,
-  email_verified: boolean,
-  identities: {
-    connection: string,
-    isSocial: boolean,
-    provider: 'auth0',
-    user_id: string,
-  },
-  name: string,
-  nickname: string,
-  picture: string,
-  sub: string,
-  updated_at: string,
+export type LoginUserWithAuth0LockInput_identity = {
+  userId: string;
+  provider: string;
+  connection: string;
+  isSocial: boolean;
+  expiresIn: number;
+};
+
+export type LoginUserWithAuth0LockInput = {
+  identity: LoginUserWithAuth0LockInput_identity;
+  access_token: string;
 };
 
 type StoredAuthType = {
@@ -57,7 +52,6 @@ class Auth {
       params: {
         state: history.location.pathname,
         scope: 'openid profile',
-        autoParseHash: true,
       },
     },
   });
@@ -86,37 +80,36 @@ class Auth {
   static onAuthenticated = (auth: StoredAuthType, _ServiceExchange = ServiceExchange, _Auth = Auth): void => {
     _ServiceExchange.emit('authenticated', { idToken: auth.idToken });
 
-    _Auth.lock.getUserInfo(auth.accessToken, (error: Error, profile: ProfileType) => {
+    _Auth.lock.getUserInfo(auth.accessToken, (error: Error, profile) => {
       if (error) {
         logger.error(error);
       }
 
       logger.info('Got user info', { profile });
 
-      const input: MutationType = {
+      const input: LoginUserWithAuth0LockInput = {
         access_token: auth.accessToken,
-        identity: {
+        identity: _.omit({
           ...profile.identities[0],
-          user_id: undefined,
           userId: profile.identities[0].user_id,
-        },
+        }, 'user_id'),
       };
 
       _Auth.loginToGraphql(input);
     });
   };
 
-  static loginToGraphql: (input: MutationType) => Promise<any> = (input: MutationType) =>
+  static loginToGraphql: (input: LoginUserWithAuth0LockInput) => Promise<any> = (input: LoginUserWithAuth0LockInput) =>
     mutate(loginMutation, { input }).then(logger.info).catch(logger.error);
 
-  static toStorage = (idToken: string, accessToken: string, expiresAt: number, global: typeof window = window) =>
-    global.localStorage.setItem('siku-auth', global.JSON.stringify({ idToken, expiresAt, accessToken }));
+  static toStorage = (idToken: string, accessToken: string, expiresAt: number, _JSON: typeof JSON = JSON, _localStorage: typeof localStorage = localStorage) =>
+    _localStorage.localStorage.setItem('siku-auth', _JSON.stringify({ idToken, expiresAt, accessToken }));
 
-  static fromStorage(global: typeof window = window): StoredAuthType {
+  static fromStorage(_JSON: typeof JSON = JSON, _localStorage = localStorage): StoredAuthType {
     try {
-      return global.JSON.parse(global.localStorage.getItem('siku-auth') || '{}');
+      return _JSON.parse(_localStorage.getItem('siku-auth') || '{}');
     } catch (e) {
-      global.localStorage.removeItem('siku-auth');
+      _localStorage.removeItem('siku-auth');
       return {};
     }
   }

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 import Logger from './logging/Logger';
 
 const logger = new Logger('ServiceExchange');

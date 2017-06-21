@@ -27,7 +27,7 @@ module.exports = {
   devtool: 'inline-source-map',
 
   resolve: {
-    extensions: ['.webpack.js', '.web.js', '.js'],
+    extensions: ['.webpack.js', '.web.js', '.js', '.ts', '.tsx'],
     alias: {
       config: path.join(__dirname, 'config', `${process.env.NODE_ENV}.js`),
     },

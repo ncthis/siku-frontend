@@ -12,11 +12,12 @@
     "relay": "relay-compiler --src ./src --schema src/services/graphql/schema.graphql"
   },
   "devDependencies": {
+    "@types/auth0-lock": "^10.16.0",
     "@types/core-js": "^0.9.41",
     "@types/debug": "^0.0.29",
     "@types/lodash": "^4.14.66",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.0",
+    "@types/node": "^8.0.1",
     "@types/react": "^15.0.29",
     "@types/react-dom": "^15.5.0",
     "@types/react-hot-loader": "^3.0.1",

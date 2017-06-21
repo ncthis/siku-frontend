@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withQuery, { graphql } from '../graphql/withQuery';
 import LoginView from './LoginView';
-import { HOCType, Component } from 'siku-types';
+import { HOCType } from 'siku-types';
 import * as _ from 'lodash';
 import { ResultPropsType } from '../graphql/withQuery';
 
@@ -49,7 +49,7 @@ function withAuthentication<OwnProps extends {}>(): HOCType<OwnProps & { user: a
   return (BaseComponent) => (
     ownProps: OwnProps,
   ) => {
-    const AuthComponent = withQuery<{ result: ResultType }, {}, OwnProps>(userQuery, {})(authComponentCreator<OwnProps>(BaseComponent, ownProps));
+    const AuthComponent = withQuery<ResultType, {}, OwnProps>(userQuery, {})(authComponentCreator<OwnProps>(BaseComponent, ownProps));
     return <AuthComponent />;
   }
 }

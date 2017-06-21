@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -10,7 +8,7 @@ import Plugins from './components/Plugins/Plugins';
 import ServiceManager from './services/ServiceManager';
 
 
-const App = (): JSX.Element => (
+const Application = (): JSX.Element => (
   <Router>
     <div>
       <div>
@@ -25,4 +23,4 @@ const App = (): JSX.Element => (
 
 ServiceManager.init();
 
-export default App;
+export default Application;

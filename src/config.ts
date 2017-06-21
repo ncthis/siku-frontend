@@ -1,6 +1,4 @@
-// @flow
-
-import process from 'process';
+import * as process from 'process';
 
 type ConfigType = {
   GRAPHQL_ENDPOINT: string,
@@ -11,7 +9,6 @@ type ConfigType = {
   ENV: string,
 };
 
-// $FlowFixMe
-let config: ConfigType = process.env.NODE_ENV !== 'test' ? (config = require('config')) : {}; // eslint-disable-line
+let config: ConfigType = process.env.NODE_ENV !== 'test' ? require('config') : {}; // eslint-disable-line
 
 export default config;

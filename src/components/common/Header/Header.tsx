@@ -4,13 +4,15 @@ import * as React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { withState } from 'recompose';
 
-const Header = ({
+interface HeaderProps {
+  activeItem: 'home' | 'messages' | 'friends' | 'logout',
+  setActiveItem: (item: string) => void,
+}
+
+const Header: React.StatelessComponent<HeaderProps> = ({
   activeItem,
   setActiveItem,
-}: {
-    activeItem: 'home' | 'messages' | 'friends' | 'logout',
-    setActiveItem: (item: string) => void,
-  }): JSX.Element => (
+}): JSX.Element => (
     <div>
       <Menu borderless>
         <Menu.Item header>siku.io</Menu.Item>
