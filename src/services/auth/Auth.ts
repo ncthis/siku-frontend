@@ -40,7 +40,7 @@ class Auth {
       redirectUrl: `${config.WEB_ROOT}`,
       responseType: 'token',
       params: {
-        state: history.location.pathname,
+        state: history && history.location && history.location.pathname,
         scope: 'openid profile',
       },
     },
