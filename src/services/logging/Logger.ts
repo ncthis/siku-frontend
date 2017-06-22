@@ -1,9 +1,9 @@
-import config from '../../config';
 import * as debug from 'debug';
+import config from '../../config';
 
 class Logger {
-  serviceName: string;
-  debug: debug.IDebugger;
+  private debug: debug.IDebugger;
+  private serviceName: string;
 
   constructor(serviceName: string) {
     this.serviceName = `siku:local:${serviceName}`;
@@ -11,17 +11,17 @@ class Logger {
     this.info('Instantiated logger');
   }
 
-  info = (...args: Array<any>) => {
-    this.debug('info', ...args);
-  };
-
-  error = (...args: Array<any>) => {
+  public error = (...args: any[]) => {
     this.debug('error', ...args);
-  };
+  }
 
-  warn = (...args: Array<any>) => {
+  public info = (...args: any[]) => {
+    this.debug('info', ...args);
+  }
+
+  public warn = (...args: any[]) => {
     this.debug('warn', ...args);
-  };
+  }
 }
 
 export default Logger;

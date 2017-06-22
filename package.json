@@ -5,7 +5,8 @@
   "author": "Nadeesha Cabral <nadeesha.cabral@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "yarn unit-tests",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "test": "yarn lint && yarn unit-tests",
     "unit-tests": "NODE_ENV=test nyc mocha ./src/**/*.test.js node_modules/.bin/saul",
     "start": "webpack-dev-server",
     "relay": "relay-compiler --src ./src --schema src/services/graphql/schema.graphql $args"
@@ -40,6 +41,7 @@
     "saul": "0.2.0-1",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
+    "tslint": "^5.4.3",
     "typescript": "next",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",

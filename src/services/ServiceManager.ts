@@ -1,17 +1,17 @@
-type Service = {
+interface IService {
   init(): void;
 }
 
 class ServiceManager {
-  static services: Array<Service> = [];
-
-  static bootstrap(service: Service, _ServiceManager = ServiceManager) {
+  public static bootstrap(service: IService, _ServiceManager = ServiceManager) {
     _ServiceManager.services.push(service);
   }
 
-  static init(_ServiceManager = ServiceManager) {
-    _ServiceManager.services.forEach((service: Service) => service.init());
+  public static init(_ServiceManager = ServiceManager) {
+    _ServiceManager.services.forEach((service: IService) => service.init());
   }
+
+  private static services: IService[] = [];
 }
 
 export default ServiceManager;
