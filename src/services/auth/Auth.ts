@@ -5,10 +5,11 @@ import Auth0Lock from 'auth0-lock';
 import config from '../../config';
 import history from '../routing/history';
 import Logger from './../logging/Logger';
-import mutate, { graphql } from './../graphql/mutate';
 import ServiceExchange from './../ServiceExchange';
 import ServiceManager from './../ServiceManager';
 import * as _ from 'lodash';
+import loginMutation from './loginMutation';
+import mutate from './../graphql/mutate';
 
 export type LoginUserWithAuth0LockInput_identity = {
   userId: string;
@@ -29,18 +30,7 @@ type StoredAuthType = {
   accessToken?: string,
 };
 
-const loginMutation: string = graphql`
-  mutation AuthMutation(
-    $input: LoginUserWithAuth0LockInput!
-  ) {
-    loginUserWithAuth0Lock(input: $input) {
-      user {
-        id
-      }
-      clientMutationId
-    }
-  }
-`;
+
 
 const logger = new Logger('Auth');
 

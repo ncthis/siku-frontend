@@ -14,7 +14,7 @@ const Header: React.StatelessComponent<HeaderProps> = ({
   setActiveItem,
 }): JSX.Element => (
     <div>
-      <Menu borderless>
+      <Menu borderless color={'black'} inverted attached>
         <Menu.Item header>siku.io</Menu.Item>
         <Menu.Item
           name="home"

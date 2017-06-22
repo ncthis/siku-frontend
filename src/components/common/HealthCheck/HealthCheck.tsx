@@ -1,11 +1,11 @@
 // @flow
 
 import * as React from 'react';
-import { graphql } from 'react-relay';
 
 import withQuery from './../../../services/graphql/withQuery';
 import { HOCType } from 'siku-types';
 import { ResultPropsType } from '../../../services/graphql/withQuery';
+import HealthCheckQuery from './HealthCheckQuery.js';
 
 type QueryResultType = {
   checkHealth: {
@@ -23,14 +23,7 @@ const HealthCheckComponent: React.StatelessComponent<HealthCheckProps> = (
 ) => <div>{JSON.stringify(props.result && props.result.checkHealth)}</div>;
 
 const enhance: HOCType<HealthCheckProps, {}> = withQuery(
-  graphql`
-    query HealthCheckQuery {
-      checkHealth {
-          healthy
-          message
-      }
-    }
-  `,
+  HealthCheckQuery,
   {},
 );
 

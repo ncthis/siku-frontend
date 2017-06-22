@@ -4,6 +4,7 @@ import LoginView from './LoginView';
 import { HOCType } from 'siku-types';
 import * as _ from 'lodash';
 import { ResultPropsType } from '../graphql/withQuery';
+import withAuthenticationQuery from './withAuthenticationQuery.js';
 
 interface ResultType {
   viewer: {
@@ -11,18 +12,7 @@ interface ResultType {
   };
 };
 
-const userQuery = graphql`
-  query withAuthenticationQuery {
-    viewer {
-      id
-      user {
-        id
-      }
-    }
-  }
-`;
-
-const enhanceWithUserQuery = withQuery(userQuery, {});
+const enhanceWithUserQuery = withQuery(withAuthenticationQuery, {});
 
 interface IBaseProps {
   readonly user: any;
@@ -49,7 +39,7 @@ function withAuthentication<OwnProps extends {}>(): HOCType<OwnProps & { user: a
   return (BaseComponent) => (
     ownProps: OwnProps,
   ) => {
-    const AuthComponent = withQuery<ResultType, {}, OwnProps>(userQuery, {})(authComponentCreator<OwnProps>(BaseComponent, ownProps));
+    const AuthComponent = withQuery<ResultType, {}, OwnProps>(withAuthenticationQuery, {})(authComponentCreator<OwnProps>(BaseComponent, ownProps));
     return <AuthComponent />;
   }
 }

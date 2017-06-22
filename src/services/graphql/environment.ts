@@ -1,7 +1,7 @@
 // @flow
 
 import * as _ from 'lodash';
-const { Environment, Network, RecordSource, Store }: any = 'relay-runtime';
+import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import config from './../../config';
 import AccessTokenManager from './AccessTokenManager';
 

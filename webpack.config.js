@@ -1,6 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
+if (!process.env.NODE_ENV) {
+  throw new Error('NODE_ENV is not set');
+}
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',
@@ -57,6 +61,11 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: ['awesome-typescript-loader'],
+      },
+      {
+        test: /\.js?$/,
+        loader: ['babel-loader'],
+        exclude: /node_modules/,
       },
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       // https://github.com/gajus/react-css-modules#css-modules

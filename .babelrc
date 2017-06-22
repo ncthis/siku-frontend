@@ -12,8 +12,8 @@
     "stage-0"
   ],
   "plugins": [
-    "react-hot-loader/babel",
     "relay",
+    "react-hot-loader/babel",
     "autobind-class-methods"
   ]
 }
