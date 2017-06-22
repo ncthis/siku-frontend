@@ -1,5 +1,3 @@
-// @flow
-
 import Auth0Lock from 'auth0-lock';
 
 import config from '../../config';

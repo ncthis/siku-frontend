@@ -1,5 +1,3 @@
-// @flow
-
 import * as _ from 'lodash';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 import config from './../../config';

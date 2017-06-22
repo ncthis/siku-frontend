@@ -10,7 +10,6 @@ class ServiceManager {
   }
 
   static init(_ServiceManager = ServiceManager) {
-    // $FlowFixMe
     _ServiceManager.services.forEach((service: Service) => service.init());
   }
 }

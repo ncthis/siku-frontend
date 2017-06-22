@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 
 import withQuery from './../../../services/graphql/withQuery';

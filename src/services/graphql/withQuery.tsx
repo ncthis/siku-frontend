@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { graphql as _graphql, QueryRenderer } from 'react-relay';
 import _environment from './environment';

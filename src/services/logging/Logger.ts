@@ -1,5 +1,3 @@
-// @flow
-
 import config from '../../config';
 import * as debug from 'debug';
 

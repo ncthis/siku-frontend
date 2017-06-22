@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { withState } from 'recompose';

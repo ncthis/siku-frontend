@@ -1,5 +1,3 @@
-/* @flow */
-
 import * as React from 'react';
 import { Header, Segment, Divider } from 'semantic-ui-react';
 import HealthCheck from './../common/HealthCheck/HealthCheck';

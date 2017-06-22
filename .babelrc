@@ -6,7 +6,6 @@
         "modules": false
       }
     ],
-    "flow",
     "react",
     "env",
     "stage-0"
