@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-if (!process.env.NODE_ENV) {
-  throw new Error('NODE_ENV is not set');
-}
+require('dotenv').config();
 
 module.exports = {
   entry: [
@@ -32,9 +30,6 @@ module.exports = {
 
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.js', '.ts', '.tsx'],
-    alias: {
-      config: path.join(__dirname, 'config', `${process.env.NODE_ENV}.js`),
-    },
   },
 
   plugins: [
@@ -46,6 +41,17 @@ module.exports = {
 
     new webpack.NoEmitOnErrorsPlugin(),
     // do not emit compiled assets that include errors
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        GRAPHQL_ENDPOINT: JSON.stringify(process.env.GRAPHQL_ENDPOINT),
+        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
+        AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
+        AUTH0_AUDIENCE: JSON.stringify(process.env.AUTH0_AUDIENCE),
+        WEB_ROOT: JSON.stringify(process.env.WEB_ROOT),
+        ENV: JSON.stringify(process.env.ENV),
+      },
+    }),
   ],
 
   devServer: {

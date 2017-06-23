@@ -6,17 +6,24 @@ import AccessTokenManager from './AccessTokenManager';
 const source: any = new RecordSource();
 const store: any = new Store(source);
 
-const getHeaders = (accessToken: string): Object =>
+interface IGraphqlHeaders {
+  [key: string]: string;
+}
+
+const getHeaders = (accessToken: string): IGraphqlHeaders =>
   _({
     'content-type': 'application/json',
-    Authorization: accessToken,
+    'Authorization': accessToken,
   })
-    .omitBy(_.isEmpty)
+    .omitBy<{ Authorization: string }>(_.isEmpty)
     .value();
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
-function fetchQuery<T, V>(operation: { text: string, }, variables: V): Promise<T> {
+function fetchQuery<T, V>(
+  operation: { text: string },
+  variables: V,
+): Promise<T> {
   const headers = getHeaders(AccessTokenManager.getToken());
 
   return fetch(config.GRAPHQL_ENDPOINT, {

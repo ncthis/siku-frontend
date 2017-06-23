@@ -1,10 +1,8 @@
 declare module 'react-relay' {
   const graphql: any;
 
-  type EnvironmentType = {};
-
-  interface QueryRendererProps {
-    environment: EnvironmentType;
+  interface IQueryRendererProps {
+    environment: {};
     query: any;
     variables: any;
     render: (error: Error, props: any) => JSX.Element;
@@ -12,12 +10,15 @@ declare module 'react-relay' {
 
   const QueryRenderer: any;
 
-  interface MutationParams {
+  interface IMutationParams {
     mutation: string;
     variables: any;
     onCompleted: (res: any) => void;
     onError: (err: Error) => void;
   }
 
-  function commitMutation(environment: EnvironmentType, params: MutationParams): void;
+  function commitMutation(
+    environment: {},
+    params: IMutationParams,
+  ): void;
 }

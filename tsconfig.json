@@ -7,7 +7,7 @@
     "target": "es5",
     "jsx": "react",
     "typeRoots": [
-      "./src/custom-types/**/*"
+      "custom-types/**/*"
     ],
     "types": [
       "node"
@@ -16,6 +16,7 @@
     "allowJs": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "custom-types/**/*"
   ]
 }
