@@ -1,15 +1,25 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
     ],
-    "jsRules": {},
-    "rules": {
-      "quotemark": [true, "single", "jsx-double"],
-      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-      "ordered-imports": [false],
-      "class-name": false,
-      "object-literal-sort-keys": false
-    },
-    "rulesDirectory": []
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "allow-leading-underscore"
+    ],
+    "ordered-imports": [
+      false
+    ],
+    "class-name": false,
+    "object-literal-sort-keys": false
+  },
+  "rulesDirectory": []
 }

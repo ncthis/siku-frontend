@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 import Dashboard from './components/Dashboard/Dashboard';
 import Plugins from './components/Plugins/Plugins';
 import ServiceManager from './services/ServiceManager';
-
+import SubmitPlugin from './components/SubmitPlugin/SubmitPlugin';
 
 const Application = (): JSX.Element => (
   <Router>
@@ -14,9 +14,12 @@ const Application = (): JSX.Element => (
       <div>
         <Header />
       </div>
-      <Route exact path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
-      <Route path="/plugins" component={Plugins} />
+      <div className="ui container">
+        <Route exact path="/" component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/plugins" component={Plugins} />
+        <Route path="/submit-plugin" component={SubmitPlugin} />
+      </div>
     </div>
   </Router>
 );
