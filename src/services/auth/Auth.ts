@@ -119,7 +119,7 @@ class Auth {
     _JSON: typeof JSON = JSON,
     _localStorage: typeof localStorage = localStorage,
   ) =>
-    _localStorage.localStorage.setItem(
+    _localStorage.setItem(
       'siku-auth',
       _JSON.stringify({ idToken, expiresAt, accessToken }),
     )

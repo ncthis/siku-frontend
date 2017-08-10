@@ -60,7 +60,7 @@
     "react-relay": "^1.0.0",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "recompose": "^0.23.4",
+    "recompose": "^0.24.0",
     "relay-runtime": "^1.0.0",
     "semantic-ui-react": "^0.68.5"
   },

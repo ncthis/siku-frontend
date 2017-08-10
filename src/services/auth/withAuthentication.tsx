@@ -3,19 +3,23 @@ import withQuery, { graphql } from '../graphql/withQuery';
 import LoginView from './LoginView';
 import { HOCType } from 'siku-types';
 import * as _ from 'lodash';
-import { ResultPropsType } from '../graphql/withQuery';
+import { IResultPropsType } from '../graphql/withQuery';
 import withAuthenticationQuery from './withAuthenticationQuery.js';
 
-interface ResultType {
+interface IResultType {
   viewer: {
     readonly user: any;
   };
-};
+}
 
 const enhanceWithUserQuery = withQuery(withAuthenticationQuery, {});
 
-interface IBaseProps {
-  readonly user: any;
+interface IUser {
+  id: string;
+}
+
+export interface IAuthenticatedProps {
+  user: IUser;
 }
 
 // const AuthByResult: React.StatelessComponent<{ result: ResultType }>
@@ -23,25 +27,39 @@ interface IBaseProps {
 //     _.get(result, 'viewer.user') ?
 //       <BaseComponent {...ownProps} user={result.viewer.user} /> : <LoginView />
 
-type AutherProps<OwnProps> = ResultPropsType<ResultType, {}> & OwnProps;
+const userKey = 'siku-user';
 
-const authComponentCreator = <OwnProps extends {}>
-  (BaseComponent: React.StatelessComponent<OwnProps & { user: any }>, ownProps: Readonly<OwnProps>): React.StatelessComponent<AutherProps<OwnProps>> =>
-  ({ result }: AutherProps<OwnProps>): JSX.Element => {
-    if (_.get(result, 'viewer.user')) {
-      return <BaseComponent {...ownProps} user={result.viewer.user} />
-    }
+const storeUser = (userObj: IUser): void => localStorage.setItem(userKey, JSON.stringify(userObj));
 
-    return <LoginView />;
+const getUserFromStorage = (): IUser => JSON.parse(localStorage.getItem(userKey));
+
+type AutherProps<OwnProps> = IResultPropsType<IResultType, {}> & OwnProps;
+
+const authComponentCreator = <OwnProps extends {}>(
+  BaseComponent: React.StatelessComponent<OwnProps & IAuthenticatedProps>,
+  ownProps: Readonly<OwnProps>,
+): React.StatelessComponent<AutherProps<OwnProps>> => ({
+  result,
+}: AutherProps<OwnProps>): JSX.Element => {
+  const user = _.get<IUser>(result, 'viewer.user') || getUserFromStorage();
+
+  if (user) {
+    storeUser(user);
+    return <BaseComponent {...ownProps} user={user} />;
   }
 
-function withAuthentication<OwnProps extends {}>(): HOCType<OwnProps & { user: any }, OwnProps> {
-  return (BaseComponent) => (
-    ownProps: OwnProps,
-  ) => {
-    const AuthComponent = withQuery<ResultType, {}, OwnProps>(withAuthenticationQuery, {})(authComponentCreator<OwnProps>(BaseComponent, ownProps));
-    return <AuthComponent />;
-  }
-}
+  return <LoginView />;
+};
+
+const withAuthentication = <OwnProps extends {}>(): HOCType<
+  OwnProps & IAuthenticatedProps,
+  OwnProps
+> => BaseComponent => (ownProps: OwnProps) => {
+  const AuthComponent = withQuery<IResultType, {}, OwnProps>(
+    withAuthenticationQuery,
+    {},
+  )(authComponentCreator<OwnProps>(BaseComponent, ownProps));
+  return <AuthComponent />;
+};
 
 export default withAuthentication;

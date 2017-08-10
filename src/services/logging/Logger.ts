@@ -1,5 +1,4 @@
 import * as debug from 'debug';
-import config from '../../config';
 
 class Logger {
   private debug: debug.IDebugger;

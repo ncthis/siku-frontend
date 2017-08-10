@@ -2,25 +2,25 @@ import * as React from 'react';
 
 import withQuery from './../../../services/graphql/withQuery';
 import { HOCType } from 'siku-types';
-import { ResultPropsType } from '../../../services/graphql/withQuery';
+import { IResultPropsType } from '../../../services/graphql/withQuery';
 import HealthCheckQuery from './HealthCheckQuery.js';
 
-type QueryResultType = {
+interface IQueryResultType {
   checkHealth: {
-    healthy: boolean,
-    message: string,
-  },
-};
-
-interface HealthCheckProps extends ResultPropsType<QueryResultType, {}> {
-  result: QueryResultType;
+    healthy: boolean;
+    message: string;
+  };
 }
 
-const HealthCheckComponent: React.StatelessComponent<HealthCheckProps> = (
-  props: HealthCheckProps,
+interface IHealthCheckProps extends IResultPropsType<IQueryResultType, {}> {
+  result: IQueryResultType;
+}
+
+const HealthCheckComponent: React.StatelessComponent<IHealthCheckProps> = (
+  props: IHealthCheckProps,
 ) => <div>{JSON.stringify(props.result && props.result.checkHealth)}</div>;
 
-const enhance: HOCType<HealthCheckProps, {}> = withQuery(
+const enhance: HOCType<IHealthCheckProps, {}> = withQuery(
   HealthCheckQuery,
   {},
 );
