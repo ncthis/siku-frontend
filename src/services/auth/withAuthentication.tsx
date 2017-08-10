@@ -22,11 +22,6 @@ export interface IAuthenticatedProps {
   user: IUser;
 }
 
-// const AuthByResult: React.StatelessComponent<{ result: ResultType }>
-//   = ({ result }: { result: ResultType }) =>
-//     _.get(result, 'viewer.user') ?
-//       <BaseComponent {...ownProps} user={result.viewer.user} /> : <LoginView />
-
 const userKey = 'siku-user';
 
 const storeUser = (userObj: IUser): void => localStorage.setItem(userKey, JSON.stringify(userObj));
